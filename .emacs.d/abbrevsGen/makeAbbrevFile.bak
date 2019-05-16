@@ -1,0 +1,36 @@
+#!/bin/bash
+mv ../abbrevs.el ../abbrevs.el.bak
+echo ";;This is an automatically generated file" | cat > ../abbrevs.el
+echo ";; -- DO NOT EDIT! --" | cat >> ../abbrevs.el
+echo "" | cat >> ../abbrevs.el
+echo "(autoload 'expand-abbrev-hook \"expand\")" | cat >> ../abbrevs.el
+cat \
+BUFFER_MODE \
+CUSTOM_MODE \
+COMINT_MODE \
+COMPLETION_LIST_MODE \
+DOCTEX_MODE \
+EMACS_LISP_MODE \
+FUNDAMENTAL_MODE \
+GLOBAL \
+LISP_MODE \
+LATEX_MODE \
+ \
+    GENERAL_words.el \
+    LATEX_commands.el \
+    LATEX_subscripted_numbers_letters.el \
+    LATEX_maths_related_words.el \
+    LATEX_char_expansions.el \
+    LATEX_miscellaneous.el \
+    LATEX_pronouns.el \
+    LATEX_symbol_shortcuts.el \
+ \
+MESSAGE_MODE \
+OUTLINE_MODE \
+SHELL_MODE \
+SPECIAL_MODE \
+TEXT_MODE \
+ \
+ \
+END \
+>> ../abbrevs.el

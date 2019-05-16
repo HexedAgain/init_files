@@ -1,0 +1,10 @@
+(macroexpand (interrogate-element "foo")) 
+<a></a>
+<a href="hello"></a>
+<a href="heoo"></a>
+<a></a>
+<a href="hoo"></a>
+<a href="temp">fjsk</a>
+
+(html_sk a "hello") 
+

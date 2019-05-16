@@ -1,0 +1,31 @@
+(defun erc ()
+  (interactive)
+  (find-file "~/.emacs"))
+
+(defun occur-all ()
+  (interactive)
+  (multi-occur-in-matching-buffers "." (thing-at-point 'symbol))
+  (other-window 1)
+  (evil-exit-emacs-state))
+
+(defun std-layout ()
+  (interactive)
+  (delete-other-windows)
+  (if (get-buffer "*Buffer List*") (kill-buffer "*Buffer List*") nil)
+  (split-window-vertically)
+  (split-window-horizontally)
+  (shrink-window -25)
+  (other-window 2)
+  (shell)
+  (evil-normal-state)
+  (other-window 1))
+
+(defun open-buffers ()
+  (interactive)
+  (list-buffers)
+  (switch-to-buffer "*Buffer List*")
+  (evil-normal-state))
+
+;; Would be useful to develop an abstract menu buffer (where the j,k keys navigate down/up respectively (with the current line highlighted and all lines numbered perhaps (and entering numbers will move focus to that line)), and <RET> will apply some function to the text living on that line (function will have been supplied by the caller), and then exit out of the menu (by killing it)
+
+(provide 'util-functions)

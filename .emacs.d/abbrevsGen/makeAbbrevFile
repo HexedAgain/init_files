@@ -1,0 +1,53 @@
+#!/bin/bash
+
+catAbbrevs ()
+{
+    mode=$1
+    echo "
+    (define-abbrev-table '$mode-abbrev-table '(" >> out
+      if [ $# -gt 0 ]
+      then
+          for i in ${@:2}; do cat $i >> out; done
+      fi
+   echo "    ))" >> out
+}
+
+mv ../custom/abbrevs.el ../abbrevs.el.bak
+echo ";;This is an automatically generated file" | cat > out
+echo ";; -- DO NOT EDIT! --" | cat >> out
+echo "" | cat >> out
+echo "    (autoload 'expand-abbrev-hook \"expand\")" | cat >> out
+
+catAbbrevs buffer-mode
+catAbbrevs custom-mode
+catAbbrevs comint-mode
+catAbbrevs completion-list-mode
+catAbbrevs doctex-mode
+catAbbrevs emacs-lisp-mode
+catAbbrevs fundamental-mode
+catAbbrevs html-mode \
+    HTML_tags.el
+catAbbrevs global
+catAbbrevs lisp-mode
+catAbbrevs latex-mode \
+    GENERAL_words.el \
+    LATEX_commands.el \
+    LATEX_subscripted_numbers_letters.el \
+    LATEX_maths_related_words.el \
+    LATEX_char_expansions.el \
+    LATEX_miscellaneous.el \
+    LATEX_pronouns.el \
+    LATEX_symbol_shortcuts.el
+catAbbrevs message-mode
+catAbbrevs outline-mode
+catAbbrevs shell-mode
+catAbbrevs special-mode
+catAbbrevs java-mode \
+    JAVA_skeletons.el
+catAbbrevs text-mode
+
+#for the second sed pipe ... essentially it is replacing "blah\n    ))" with "blah))".
+#the second sed courtesy of stack exchange!
+#the :a denotes a branch label, where b goes to that label. the N means appends a newline and the next line to pattern space
+cat out | sed 's/\(^(.*\)/        \1/' | sed ':a;N;$!ba;s/\n    ))/))/g' > ../custom/abbrevs.el
+rm out
